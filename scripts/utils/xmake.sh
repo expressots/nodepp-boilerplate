@@ -2,8 +2,28 @@ check_if_repository_exists() {
 	xrepo list-repo | grep -q "$1"
 }
 
+check_if_repositories_exists_and_add() {
+  REPOSITORIES="$1"
+  CONFIG_FILE="$2"
+	for REPOSITORY in $REPOSITORIES; do
+		if ! check_if_repository_exists "$REPOSITORY"; then
+      xrepo add-repo -y "$REPOSITORY" "$(stoml "$CONFIG_FILE" repositories."$REPOSITORY".git)"
+		fi
+	done
+}
+
 check_if_dependency_exists() {
 	xrepo scan "$1" | grep -q "$1"
+}
+
+check_if_dependencies_exists_and_install() {
+  DEPENDENCIES="$1"
+	for DEPENDENCY in $DEPENDENCIES; do
+		if ! check_if_dependency_exists "$DEPENDENCY"; then
+			# TODO: Check how to install specific version
+			xrepo install -y "$DEPENDENCY"
+		fi
+	done
 }
 
 prompt_user_to_select() {

@@ -8,8 +8,8 @@
 
 ## TODO
 
-- [ ] Docker environment
-- [ ] In the build step verify if and install dependencies
+- [X] Docker environment
+- [X] In the build step verify if dependencies are installed
 - [ ] Create a precommit hook to update .gitignore node_modules with the `package.name` from the config
 - [ ] Faster way to generate `compile_commands.json`
 - [ ] The `node-gyp` extension is supposed not to be needed

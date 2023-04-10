@@ -7,6 +7,10 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source "$CURRENT_DIR/utils/log.sh" # log_error, log_success, log_info
 # shellcheck source=./utils/misc.sh
 source "$CURRENT_DIR/utils/misc.sh" # command_exists
+# shellcheck source=./utils/xmake.sh
+source "$CURRENT_DIR/utils/xmake.sh" # check_if_repositories_exists_and_add, check_if_dependencies_exists_and_install
+# shellcheck source=./utils/constants.sh
+source "$CURRENT_DIR/utils/constants.sh" # DEPENDENCIES REPOSITORIES CONFIG_FILE
 
 usage() {
 	echo "Usage: $0 [options]"
@@ -70,6 +74,9 @@ fi
 # Build the addon
 if [ "$BUILD" = true ]; then
 	log_info "Building the addon"
+
+  check_if_repositories_exists_and_add "$REPOSITORIES" "$CONFIG_FILE"
+  check_if_dependencies_exists_and_install "$DEPENDENCIES"
 
 	if ! $PACKAGE_MANAGER run gen:lib &>/dev/null; then
 		log_error "Failed to build the addon"

@@ -6,9 +6,9 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # shellcheck source=./utils/misc.sh
 source "$CURRENT_DIR/utils/misc.sh"      # command_exists
 # shellcheck source=./utils/xmake.sh
-source "$CURRENT_DIR/utils/xmake.sh"     # check_if_repository_exists, check_if_dependency_exists
+source "$CURRENT_DIR/utils/xmake.sh"     # check_if_repositories_exists_and_add, check_if_dependencies_exists_and_install
 # shellcheck source=./utils/constants.sh
-source "$CURRENT_DIR/utils/constants.sh" # CONFIG_FILE
+source "$CURRENT_DIR/utils/constants.sh" # CONFIG_FILE DEPENDENCIES REPOSITORIES
 
 usage() {
   echo "Usage: $0 [options]"
@@ -67,29 +67,18 @@ done
 install_dependencies() {
 	# Read the root directory file `dependencies.toml` and install all the dependencies
 	# listed in the file.
-	REPOSITORIES=$(stoml $CONFIG_FILE repositories)
-	DEPENDENCIES=$(stoml $CONFIG_FILE dependencies)
 
 	# List repositories
-	for REPOSITORY in $REPOSITORIES; do
-		if ! check_if_repository_exists "$REPOSITORY"; then
-			xrepo add-repo "$REPOSITORY" "$(stoml $CONFIG_FILE repositories."$REPOSITORY".git)"
-		fi
-	done
+  check_if_repositories_exists_and_add "$REPOSITORIES" "$CONFIG_FILE"
 
 	# List dependencies
-	for DEPENDENCY in $DEPENDENCIES; do
-		if ! check_if_dependency_exists "$DEPENDENCY"; then
-			# TODO: Check how to install specific version
-			xrepo install "$DEPENDENCY"
-		fi
-	done
+  check_if_dependencies_exists_and_install "$DEPENDENCIES"
 }
 
 emit_include_dirs() {
 	# Read the root directory file `dependencies.toml` and emit all the include directories
 	# listed in the file.
-	DEPENDENCIES=$(stoml $CONFIG_FILE dependencies)
+  DEPENDENCIES=$(stoml "$CONFIG_FILE" dependencies)
 
 	for DEPENDENCY in $DEPENDENCIES; do
     # Get the first letter of the dependency name
@@ -108,7 +97,7 @@ emit_include_dirs() {
 emit_libraries() {
 	# Read the root directory file `dependencies.toml` and emit all the include directories
 	# listed in the file.
-	DEPENDENCIES=$(stoml $CONFIG_FILE dependencies)
+  DEPENDENCIES=$(stoml "$CONFIG_FILE" dependencies)
 
 	for DEPENDENCY in $DEPENDENCIES; do
     # Get the first letter of the dependency name

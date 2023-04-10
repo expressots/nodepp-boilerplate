@@ -2,6 +2,10 @@
 
 > node-addon-api 
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Daniel-Boll/Nodepp-Boilerplate/main/assets/nodepp.png" width=300 />
+</p>
+
 ## TODO
 
 - [ ] Docker environment

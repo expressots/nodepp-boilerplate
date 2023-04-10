@@ -1,6 +1,4 @@
-<h1 align="center"> Node++ Boilerplate </h1>
-
-> node-addon-api 
+<h1 align="center"> Node++ Boilerplate 🛠 </h1>
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Daniel-Boll/Nodepp-Boilerplate/main/assets/nodepp-node-centered-logo.png" width=400 />

@@ -1,39 +1,35 @@
 FROM archlinux:base
 
-RUN pacman-key --init && \
-  pacman-key --populate archlinux && \
-  pacman-key --refresh-keys
+# Install OS dependencies
+RUN pacman -Syu --noconfirm --needed \
+  clang xmake git make cmake ninja unzip zsh \ 
+  nodejs yarn python \ 
+  bear go
 
-# Get better mirrors
-RUN pacman -Syu --noconfirm --needed reflector && \
-  reflector --latest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist && \
-  pacman -Syu --noconfirm --needed pacman-contrib
+# Create a user called nodepp with UID 1000
+RUN useradd -u 1000 -m -s /bin/zsh nodepp
 
-# Install dependencies (clang, xmake, git, make, cmake, ninja)
-RUN pacman -Syu --noconfirm --needed clang xmake git make cmake ninja unzip zsh && \
-  useradd -m -G wheel -s /bin/zsh nodepp
-
-# Add node.js and npm
-RUN pacman -Syu --noconfirm --needed nodejs npm
-
-# Get yarn
-RUN npm install -g corepack
-
-# Install bear
-RUN pacman -Syu --noconfirm --needed bear
-
-# Install go to get stoml
-RUN pacman -Syu --noconfirm --needed go
-RUN GO111MODULE=on go get github.com/freshautomations/stoml
-
+# Set the user as the current user
 USER nodepp
-WORKDIR /home/nodepp
 
 # Copy the project files
-COPY --chmod=0755 --chown=nodepp:nodepp . .
+COPY --chown=nodepp:nodepp . /home/nodepp/nodepp
+
+# Install go to get stomlGO111MODULE=on go install github.com/freshautomations/stoml@latest
+ENV GOPATH="/home/nodepp/go"
+RUN GO112MODULE=on go install github.com/freshautomations/stoml@latest
+
+WORKDIR /home/nodepp/nodepp
+
+# Export $HOME/go/bin to $PATH
+ENV PATH="${GOPATH}/bin:/usr/lib/bin:${PATH}"
+ENV TERM="tmux-256color"
 
 # Run the dependencies script
 RUN ./scripts/deps.sh --install
+
+# Install dependencies
+RUN yarn install --ignore-scripts
 
 # Build the project
 RUN ./scripts/build.sh --build

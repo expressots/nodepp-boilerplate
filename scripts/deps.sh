@@ -80,6 +80,12 @@ emit_include_dirs() {
 	# listed in the file.
   DEPENDENCIES=$(stoml "$CONFIG_FILE" dependencies)
 
+  # Check if the dir $HOME/.xmake/packages exists
+  if [ ! -d "$HOME/.xmake/packages" ]; then
+    echo "The directory $HOME/.xmake/packages does not exist. Please run \`xrepo install\` first."
+    exit 1
+  fi
+
 	for DEPENDENCY in $DEPENDENCIES; do
     # Get the first letter of the dependency name
     FIRST_LETTER=$(echo "$DEPENDENCY" | cut -c 1)

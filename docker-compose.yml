@@ -5,6 +5,4 @@ services:
     build: .
     volumes:
       - .:/home/nodepp
-    command: bash -c "sleep 100000"
-    stdin_open: true
-    tty: true
+    command: bash -c "yarn run:only"

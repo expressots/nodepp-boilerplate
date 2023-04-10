@@ -3,7 +3,7 @@
 > node-addon-api 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Daniel-Boll/Nodepp-Boilerplate/main/assets/nodepp.png" width=300 />
+  <img src="https://raw.githubusercontent.com/Daniel-Boll/Nodepp-Boilerplate/main/assets/nodepp-logo.png" width=300 />
 </p>
 
 ## TODO

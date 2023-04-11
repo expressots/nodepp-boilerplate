@@ -3,7 +3,7 @@ FROM archlinux:base
 # Install OS dependencies
 RUN pacman -Syu --noconfirm --needed \
   clang xmake git make cmake ninja unzip zsh \ 
-  nodejs yarn python \ 
+  nodejs yarn python patchelf \ 
   bear go
 
 # Create a user called nodepp with UID 1000

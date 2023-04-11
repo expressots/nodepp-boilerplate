@@ -8,6 +8,7 @@
 
 - [X] Docker environment
 - [X] In the build step verify if dependencies are installed
+- [X] Add `patchelf` to later link .so dependencies
 - [ ] Create a precommit hook to update .gitignore node_modules with the `package.name` from the config
 - [ ] Faster way to generate `compile_commands.json`
 - [ ] The `node-gyp` extension is supposed not to be needed

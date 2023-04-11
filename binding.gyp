@@ -15,7 +15,7 @@
       "-Wno-error=unused-variable",
       "-fno-exceptions"
     ],
-    "source_files": [ "<!@(find lib/src -name *.cpp)" ],
+    "source_files": [ "<!@(find addon/src -name *.cpp)" ],
     "dependencies_include_dirs": [ "<!@(./scripts/deps.sh --emit-include-dirs)" ],
   },
   "targets": [
@@ -25,7 +25,7 @@
       "sources": [ "<@(source_files)" ],
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")",
-        "<(module_root_dir)/lib/include",
+        "<(module_root_dir)/addon/include",
         "<@(dependencies_include_dirs)",
         "/usr/local/include/"
       ],

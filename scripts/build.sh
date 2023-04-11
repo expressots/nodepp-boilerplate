@@ -23,6 +23,7 @@ usage() {
 
 PACKAGE_MANAGER="yarn"
 BUILD=false
+BUILD_RELEASE=false
 LSP=false
 
 # If there are no arguments, show usage
@@ -46,6 +47,10 @@ while [[ $# -gt 0 ]]; do
 		;;
 	-b | --build)
 		BUILD=true
+		shift # past argument
+		;;
+	-B | --build-release)
+		BUILD_RELEASE=true
 		shift # past argument
 		;;
 	--lsp)

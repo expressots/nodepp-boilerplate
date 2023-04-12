@@ -4,5 +4,5 @@ services:
   nodepp-example:
     build: .
     volumes:
-      - .:/home/nodepp
+      - .:/home/nodepp/nodepp
     command: bash -c "yarn run:only"

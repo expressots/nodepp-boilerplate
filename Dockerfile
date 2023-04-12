@@ -16,6 +16,7 @@ USER nodepp
 COPY --chown=nodepp:nodepp . /home/nodepp/nodepp
 
 # Install go to get stomlGO111MODULE=on go install github.com/freshautomations/stoml@latest
+RUN mkdir /home/nodepp/go
 ENV GOPATH="/home/nodepp/go"
 RUN GO112MODULE=on go install github.com/freshautomations/stoml@latest
 
